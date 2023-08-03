@@ -4,6 +4,7 @@ Handling User Data
 """
 from typing import List
 import re
+import logging
 
 
 def filter_datum(fields: List[str], redaction: str,
@@ -13,3 +14,27 @@ def filter_datum(fields: List[str], redaction: str,
     """
     return re.sub(r'({0})=([^{1}]+)'.format('|'.join(fields), separator),
                   r'\1={0}'.format(redaction), message)
+
+
+class RedactingFormatter(logging.Formatter):
+    """ Redacting Formatter class
+        """
+
+    REDACTION = "***"
+    FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
+    SEPARATOR = ";"
+
+    def __init__(self, fields: List[str]):
+        """
+        instantiate RedactingFormatter instance
+        """
+        super().__init__(self.FORMAT)
+        self.fields = fields
+
+    def format(self, record: logging.LogRecord) -> str:
+        """
+        method for formatting logging
+        """
+        message = super().format(record)
+        return filter_datum(self.fields, self.REDACTION,
+                            message, self.SEPARATOR)
