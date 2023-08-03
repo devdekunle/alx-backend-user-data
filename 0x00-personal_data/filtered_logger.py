@@ -8,5 +8,8 @@ import re
 
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str,) -> str:
+    """
+    function to obfuscate a string
+    """
     return re.sub(r'({0})=([^{1}]+)'.format('|'.join(fields), separator),
                   r'\1={0}'.format(redaction), message)
