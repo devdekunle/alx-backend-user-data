@@ -10,10 +10,15 @@ import mysql.connector
 
 
 PERSONAL_DATA_DB_USERNAME = os.getenv('PERSONAL_DATA_DB_USERNAME')
+if not PERSONAL_DATA_DB_USERNAME:
+    PERSONAL_DATA_DB_USERNAME = "root"
 PERSONAL_DATA_DB_PASSWORD = os.getenv('PERSONAL_DATA_DB_PASSWORD')
+if not PERSONAL_DATA_DB_PASSWORD:
+    PERSONAL_DATA_DB_PASSWORD = ""
 PERSONAL_DATA_DB_HOST = os.getenv('PERSONAL_DATA_DB_HOST')
+if not PERSONAL_DATA_DB_HOST:
+    PERSONAL_DATA_DB_HOST = "localhost"
 PERSONAL_DATA_DB_NAME = os.getenv('PERSONAL_DATA_DB_NAME')
-
 
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str,) -> str:
