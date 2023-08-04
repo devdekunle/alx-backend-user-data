@@ -5,6 +5,14 @@ Handling User Data
 from typing import List
 import re
 import logging
+import os
+import mysql.connector
+
+
+PERSONAL_DATA_DB_USERNAME = os.getenv('PERSONAL_DATA_DB_USERNAME')
+PERSONAL_DATA_DB_PASSWORD = os.getenv('PERSONAL_DATA_DB_PASSWORD')
+PERSONAL_DATA_DB_HOST = os.getenv('PERSONAL_DATA_DB_HOST')
+PERSONAL_DATA_DB_NAME = os.getenv('PERSONAL_DATA_DB_NAME')
 
 
 def filter_datum(fields: List[str], redaction: str,
@@ -38,6 +46,18 @@ def get_logger() -> logging.Logger:
     formatter = RedactingFormatter(fields=PII_FIELDS)
     stream_handler.setFormatter(formatter)
     return logger
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """
+    create a connector to the database and return a connector
+    object
+    """
+    connector = mysql.connector.connect(host=PERSONAL_DATA_DB_HOST,
+                                        database=PERSONAL_DATA_DB_NAME,
+                                        password=PERSONAL_DATA_DB_PASSWORD,
+                                        user=PERSONAL_DATA_DB_USERNAME)
+    return connector
 
 
 class RedactingFormatter(logging.Formatter):
