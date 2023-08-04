@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+"""
+This module contains functions that hash a password and also
+check for a valid password using bcyrpt
+"""
+
 import bcrypt
 
 
