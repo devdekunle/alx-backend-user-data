@@ -20,6 +20,7 @@ if not PERSONAL_DATA_DB_HOST:
     PERSONAL_DATA_DB_HOST = "localhost"
 PERSONAL_DATA_DB_NAME = os.getenv('PERSONAL_DATA_DB_NAME')
 
+
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str,) -> str:
     """
