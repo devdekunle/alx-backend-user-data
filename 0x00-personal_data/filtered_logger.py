@@ -7,6 +7,7 @@ import re
 import logging
 import os
 import mysql.connector
+import bcrypt
 
 
 PERSONAL_DATA_DB_USERNAME = os.getenv('PERSONAL_DATA_DB_USERNAME')
