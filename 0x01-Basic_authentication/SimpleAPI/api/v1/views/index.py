@@ -24,3 +24,10 @@ def stats() -> str:
     stats = {}
     stats['users'] = User.count()
     return jsonify(stats)
+
+@app_views.route('/unauthorized', strict_slashes=False)
+def unauthorized() -> str:
+    """
+    abort operation if resource is not found
+    """
+    abort(401, description='Not found error')
