@@ -13,7 +13,7 @@ class Auth:
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """
-        returns False
+        checks if the path requuires a user authentication or not
         """
         if path is None:
             return True
