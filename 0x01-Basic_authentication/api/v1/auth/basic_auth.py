@@ -43,7 +43,7 @@ class BasicAuth(Auth):
             decoded_token = base64.b64decode(base64_authorization_header,
                                              validate=True)
             return decoded_token.decode('utf-8')
-        except base64.binascii.Error:
+        except Exception:
             return None
 
     def extract_user_credentials(self,
@@ -84,3 +84,23 @@ class BasicAuth(Auth):
         method that overloads auth and retrieves the user instance for a
         request
         """
+        if request is None:
+            return None
+        auth_header = super().authorization_header(request)
+        if auth_header is not None:
+            auth_token = self.extract_base64_authorization_header(auth_header)
+        else:
+            return None
+        decoded_token = self.decode_base64_authorization_header(auth_token)
+        if decoded_token is not None:
+            user_credentials = self.extract_user_credentials(decoded_token)
+        else:
+            return None
+
+        user_email, user_pwd = user_credentials
+
+        user = self.user_object_from_credentials(user_email, user_pwd)
+        if user is not None:
+            return user
+        else:
+            return None
