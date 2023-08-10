@@ -21,7 +21,7 @@ class BasicAuth(Auth):
         """
         if authorization_header is None:
             return None
-        if type(authorization_header) != str:
+        if type(authorization_header) is not str:
             return None
         if authorization_header.startswith('Basic ') is False:
             return None
@@ -37,7 +37,7 @@ class BasicAuth(Auth):
         """
         if base64_authorization_header is None:
             return None
-        if type(base64_authorization_header) != str:
+        if type(base64_authorization_header) is not str:
             return None
         try:
             decoded_token = base64.b64decode(base64_authorization_header,
@@ -54,7 +54,7 @@ class BasicAuth(Auth):
         """
         if decoded_base64_authorization_header is None:
             return (None, None)
-        if type(decoded_base64_authorization_header) != str:
+        if type(decoded_base64_authorization_header) is not str:
             return (None, None)
         if ":" not in decoded_base64_authorization_header:
             return (None, None)
@@ -67,14 +67,20 @@ class BasicAuth(Auth):
         """
         get a user from the file storage using the user credentials
         """
-        if user_email is None or type(user_email) != str:
+        if user_email is None or type(user_email) is not str:
             return None
-        if user_pwd is None or type(user_pwd) != str:
+        if user_pwd is None or type(user_pwd) is not str:
             return None
 
         user_instances = User.search(attributes={"email": user_email})
         if len(user_instances) == 0:
             return None
-        if user_instances[0].is_valid_password(user_pwd) == False:
+        if user_instances[0].is_valid_password(user_pwd) is False:
             return None
         return user_instances[0]
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """
+        method that overloads auth and retrieves the user instance for a
+        request
+        """
