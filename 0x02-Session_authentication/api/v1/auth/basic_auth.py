@@ -100,7 +100,8 @@ class BasicAuth(Auth):
         user_email, user_pwd = user_credentials
 
         user = self.user_object_from_credentials(user_email, user_pwd)
-        if user is not None:
+        if user:
+            print(user)
             return user
         else:
             return None
