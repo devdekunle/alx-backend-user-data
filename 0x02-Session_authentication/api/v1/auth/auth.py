@@ -4,6 +4,10 @@ Module for handling the user authentication
 """
 from flask import request
 from typing import List, TypeVar
+import os
+
+
+_my_session_id = os.getenv('SESSION_NAME')
 
 
 class Auth:
@@ -48,3 +52,11 @@ class Auth:
         returns None
         """
         return None
+
+    def session_cookie(self, request=None):
+        """
+        returns a cookie value from a request
+        """
+        if request is None:
+            return None
+        return request.cookies.get('_my_session_id')

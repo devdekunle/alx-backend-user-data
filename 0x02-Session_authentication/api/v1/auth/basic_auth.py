@@ -101,7 +101,6 @@ class BasicAuth(Auth):
 
         user = self.user_object_from_credentials(user_email, user_pwd)
         if user:
-            print(user)
             return user
         else:
             return None
