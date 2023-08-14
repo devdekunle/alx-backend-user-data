@@ -43,6 +43,5 @@ class SessionAuth(Auth):
         session_id = super().session_cookie(request)
         # get the user_id based on the session_id
         user_id = self.user_id_for_session_id(session_id)
-        print(user_id)
         user = User.get(user_id)
         return user
