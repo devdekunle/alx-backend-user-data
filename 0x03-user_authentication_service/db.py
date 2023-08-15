@@ -32,7 +32,7 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: str, hashed_password: str) -> TypeVar('User'):
+    def add_user(self, email: str, hashed_password: str) -> User:
         """
         use the email and password to get and return a user object
         """
@@ -44,7 +44,7 @@ class DB:
         self._session.commit()
         return user
 
-    def find_user_by(self, **kwargs):
+    def find_user_by(self, **kwargs) -> User:
         """
         find a user from the database using a keyworded argument
         """
