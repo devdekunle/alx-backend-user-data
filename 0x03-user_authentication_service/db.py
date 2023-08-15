@@ -48,7 +48,10 @@ class DB:
         """
         find a user from the database using a keyworded argument
         """
-        user = self._session.query(User).filter_by(**kwargs).first()
-        if user is None:
-            raise NoResultFound
-        return user
+        try:
+            user = self._session.query(User).filter_by(**kwargs).first()
+            if user is None:
+                raise NoResultFound
+            return user
+        except InvalidRequestError as e:
+            raise e
