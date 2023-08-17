@@ -69,7 +69,7 @@ class Auth:
         except NoResultFound:
             return None
 
-    def get_user_from_session_id(self, session_id) -> Optional[User]:
+    def get_user_from_session_id(self, session_id: str) -> Optional[User]:
         """
         finds a user by the session_id and return the user
         """
@@ -79,5 +79,21 @@ class Auth:
             user = self._db.find_user_by(session_id=session_id)
             if user:
                 return user
+        except NoResultFound:
+            return None
+
+    def destroy_session(self, user_id) -> None:
+        """
+        destroys a session and updates a use's session_id to None
+        """
+        if user_id is None:
+            return None
+
+        # get user
+        user = self._db.find_user_by(id=user_id)
+        try:
+            if user:
+                user.session_id = None
+                return None
         except NoResultFound:
             return None
