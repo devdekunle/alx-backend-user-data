@@ -55,7 +55,8 @@ def login():
     abort(401)
 
 
-def logout('/sessions', methods=['DELETE'], strict_slashes=False):
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
+def logout():
     """
     view function to handle log out
     """
@@ -65,7 +66,6 @@ def logout('/sessions', methods=['DELETE'], strict_slashes=False):
         AUTH.destroy_session(user.id)
         return redirect('/')
     return make_response(), 403
-
 
 
 if __name__ == '__main__':
